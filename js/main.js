@@ -23,6 +23,9 @@ const DEMO_MODULES = {
   'live-region':    () => import('./demos/live-region.js'),
   'skip-link':      () => import('./demos/skip-link.js'),
   'motion':         () => import('./demos/motion.js'),
+  'meganav':        () => import('./demos/meganav.js'),
+  'carousel':       () => import('./demos/carousel.js'),
+  'tooltip':        () => import('./demos/tooltip.js'),
 };
 
 // --- Initialization ---

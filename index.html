@@ -118,6 +118,9 @@
           <li><a href="#demo-live-regions" class="demo-nav__link"><span class="demo-nav__num">08</span> Live Regions</a></li>
           <li><a href="#demo-skip-link" class="demo-nav__link"><span class="demo-nav__num">09</span> Skip Link</a></li>
           <li><a href="#demo-reduced-motion" class="demo-nav__link"><span class="demo-nav__num">10</span> Reduced Motion</a></li>
+          <li><a href="#demo-meganav" class="demo-nav__link"><span class="demo-nav__num">11</span> Mega Navigation</a></li>
+          <li><a href="#demo-carousel" class="demo-nav__link"><span class="demo-nav__num">12</span> Carousel</a></li>
+          <li><a href="#demo-tooltip" class="demo-nav__link"><span class="demo-nav__num">13</span> Tooltip</a></li>
         </ol>
       </details>
       <!-- Desktop: always visible -->
@@ -132,6 +135,9 @@
         <li><a href="#demo-live-regions" class="demo-nav__link"><span class="demo-nav__num">08</span> Live Regions</a></li>
         <li><a href="#demo-skip-link" class="demo-nav__link"><span class="demo-nav__num">09</span> Skip Link</a></li>
         <li><a href="#demo-reduced-motion" class="demo-nav__link"><span class="demo-nav__num">10</span> Reduced Motion</a></li>
+        <li><a href="#demo-meganav" class="demo-nav__link"><span class="demo-nav__num">11</span> Mega Navigation</a></li>
+        <li><a href="#demo-carousel" class="demo-nav__link"><span class="demo-nav__num">12</span> Carousel</a></li>
+        <li><a href="#demo-tooltip" class="demo-nav__link"><span class="demo-nav__num">13</span> Tooltip</a></li>
       </ol>
     </nav>
 
@@ -1533,6 +1539,619 @@ status.textContent = 'Settings saved.';</code></pre>
             <div class="wcag-annotation__item">
               <dt>How to test</dt>
               <dd>Enable "Reduce Motion" in your OS accessibility settings (macOS: System Settings → Accessibility → Display; Windows: Settings → Ease of Access → Display). All non-essential animation should stop or be replaced with a simple fade.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 11 — MEGA NAVIGATION
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-meganav"
+        aria-labelledby="demo-11-heading"
+        data-demo="meganav"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">11</span>
+          <h2 id="demo-11-heading" class="demo-title">Mega Navigation</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.1.1 / 4.1.2</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Mega navigation menus are often built as CSS hover-only dropdowns — keyboard
+          users can Tab to the top-level links but can't reach submenu content at all.
+          The fix uses disclosure buttons with <code>aria-expanded</code> and arrow-key
+          navigation so every item is reachable without a mouse.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Mega navigation: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true"
+              aria-controls="panel-mn-broken" id="tab-mn-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false"
+              aria-controls="panel-mn-fixed" id="tab-mn-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+
+            <!-- Broken panel -->
+            <div class="demo-panel demo-panel--broken" role="tabpanel"
+              id="panel-mn-broken" aria-labelledby="tab-mn-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — hover-only, no keyboard access</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Hover the nav items with a mouse to open submenus.
+                  Try reaching a submenu link with Tab or arrow keys — you can't.</p>
+
+                <nav class="demo-meganav demo-meganav--broken" aria-label="Broken mega nav example">
+                  <ul class="demo-meganav__bar" role="list">
+                    <li class="demo-meganav__item">
+                      <a href="#" class="demo-meganav__trigger demo-meganav__trigger--broken"
+                        onclick="return false">Patterns</a>
+                      <div class="demo-meganav__panel">
+                        <ul role="list">
+                          <li><a href="#" onclick="return false">Forms</a></li>
+                          <li><a href="#" onclick="return false">Navigation</a></li>
+                          <li><a href="#" onclick="return false">Dialogs</a></li>
+                          <li><a href="#" onclick="return false">Tables</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="demo-meganav__item">
+                      <a href="#" class="demo-meganav__trigger demo-meganav__trigger--broken"
+                        onclick="return false">Guidelines</a>
+                      <div class="demo-meganav__panel">
+                        <ul role="list">
+                          <li><a href="#" onclick="return false">WCAG 2.1</a></li>
+                          <li><a href="#" onclick="return false">ARIA Spec</a></li>
+                          <li><a href="#" onclick="return false">Color &amp; Contrast</a></li>
+                          <li><a href="#" onclick="return false">Mobile</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="demo-meganav__item">
+                      <a href="#" class="demo-meganav__trigger demo-meganav__trigger--broken"
+                        onclick="return false">Resources</a>
+                      <div class="demo-meganav__panel">
+                        <ul role="list">
+                          <li><a href="#" onclick="return false">Contrast Checker</a></li>
+                          <li><a href="#" onclick="return false">Screen Readers</a></li>
+                          <li><a href="#" onclick="return false">Validators</a></li>
+                          <li><a href="#" onclick="return false">Articles</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <!-- Fixed panel -->
+            <div class="demo-panel demo-panel--fixed" role="tabpanel"
+              id="panel-mn-fixed" aria-labelledby="tab-mn-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — buttons, aria-expanded, arrow keys, Escape</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Tab to a top-level button and press Enter or Space to
+                  open. Arrow Down/Up navigates submenu links. Escape closes and returns focus.</p>
+
+                <nav class="demo-meganav demo-meganav--fixed" aria-label="Fixed mega nav example">
+                  <ul class="demo-meganav__bar" role="list">
+                    <li class="demo-meganav__item">
+                      <button class="demo-meganav__trigger demo-meganav__trigger--fixed"
+                        aria-expanded="false" aria-controls="mn-panel-patterns" type="button">
+                        Patterns
+                        <svg class="demo-meganav__chevron" aria-hidden="true" focusable="false"
+                          width="12" height="12" viewBox="0 0 12 12">
+                          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5"
+                            fill="none" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <ul class="demo-meganav__panel" id="mn-panel-patterns" role="list" hidden>
+                        <li><a href="#" onclick="return false">Forms</a></li>
+                        <li><a href="#" onclick="return false">Navigation</a></li>
+                        <li><a href="#" onclick="return false">Dialogs</a></li>
+                        <li><a href="#" onclick="return false">Tables</a></li>
+                      </ul>
+                    </li>
+                    <li class="demo-meganav__item">
+                      <button class="demo-meganav__trigger demo-meganav__trigger--fixed"
+                        aria-expanded="false" aria-controls="mn-panel-guidelines" type="button">
+                        Guidelines
+                        <svg class="demo-meganav__chevron" aria-hidden="true" focusable="false"
+                          width="12" height="12" viewBox="0 0 12 12">
+                          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5"
+                            fill="none" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <ul class="demo-meganav__panel" id="mn-panel-guidelines" role="list" hidden>
+                        <li><a href="#" onclick="return false">WCAG 2.1</a></li>
+                        <li><a href="#" onclick="return false">ARIA Spec</a></li>
+                        <li><a href="#" onclick="return false">Color &amp; Contrast</a></li>
+                        <li><a href="#" onclick="return false">Mobile</a></li>
+                      </ul>
+                    </li>
+                    <li class="demo-meganav__item">
+                      <button class="demo-meganav__trigger demo-meganav__trigger--fixed"
+                        aria-expanded="false" aria-controls="mn-panel-resources" type="button">
+                        Resources
+                        <svg class="demo-meganav__chevron" aria-hidden="true" focusable="false"
+                          width="12" height="12" viewBox="0 0 12 12">
+                          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5"
+                            fill="none" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <ul class="demo-meganav__panel" id="mn-panel-resources" role="list" hidden>
+                        <li><a href="#" onclick="return false">Contrast Checker</a></li>
+                        <li><a href="#" onclick="return false">Screen Readers</a></li>
+                        <li><a href="#" onclick="return false">Validators</a></li>
+                        <li><a href="#" onclick="return false">Articles</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- anchor tag, hover-only CSS --&gt;
+&lt;a href="/patterns"&gt;Patterns&lt;/a&gt;
+&lt;div class="dropdown"&gt;
+  &lt;!-- shown only via :hover --&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;button type="button"
+        aria-expanded="false"
+        aria-controls="panel-patterns"&gt;
+  Patterns
+&lt;/button&gt;
+&lt;ul id="panel-patterns" hidden&gt;
+  &lt;!-- JS toggles hidden +
+       aria-expanded on click --&gt;
+&lt;/ul&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>2.1.1 Keyboard (Level A) — all functionality must be reachable via keyboard alone</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>4.1.2 Name, Role, Value (Level A) — interactive controls must expose their expanded/collapsed state</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard-only users, switch access users, screen reader users — hover-only menus are completely inaccessible to them</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Tab to a top-level button; press Enter — submenu should open and aria-expanded should change to "true". Arrow keys should move through submenu links. Escape should close and return focus to the trigger.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 12 — CAROUSEL
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-carousel"
+        aria-labelledby="demo-12-heading"
+        data-demo="carousel"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">12</span>
+          <h2 id="demo-12-heading" class="demo-title">Carousel</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.2.2</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Auto-advancing carousels must provide a mechanism to pause, stop, or hide the
+          movement. Without one, users who need more time to read — or who find motion
+          distracting — have no recourse. Keyboard users also need explicit controls to
+          navigate between slides.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Carousel: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true"
+              aria-controls="panel-cr-broken" id="tab-cr-broken" tabindex="0" type="button">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false"
+              aria-controls="panel-cr-fixed" id="tab-cr-fixed" tabindex="-1" type="button">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+
+            <!-- Broken panel -->
+            <div class="demo-panel demo-panel--broken" role="tabpanel"
+              id="panel-cr-broken" aria-labelledby="tab-cr-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — auto-advances, no pause, no keyboard nav</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Watch the slides advance every 3 seconds. There
+                  is no way to pause, and no keyboard controls to change slides.</p>
+
+                <div class="demo-carousel demo-carousel--broken">
+                  <div class="carousel-track" id="broken-carousel-track">
+                    <div class="carousel-slide carousel-slide--1">
+                      <p class="carousel-slide__eyebrow">Tip 01</p>
+                      <p class="carousel-slide__title">Color Contrast</p>
+                      <p class="carousel-slide__body">Ensure a minimum 4.5:1 contrast ratio between text and its background.</p>
+                    </div>
+                    <div class="carousel-slide carousel-slide--2" hidden>
+                      <p class="carousel-slide__eyebrow">Tip 02</p>
+                      <p class="carousel-slide__title">Keyboard Access</p>
+                      <p class="carousel-slide__body">Every interactive element must be reachable and operable with a keyboard alone.</p>
+                    </div>
+                    <div class="carousel-slide carousel-slide--3" hidden>
+                      <p class="carousel-slide__eyebrow">Tip 03</p>
+                      <p class="carousel-slide__title">Label Your Forms</p>
+                      <p class="carousel-slide__body">Every input must have a visible, programmatically associated label.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fixed panel -->
+            <div class="demo-panel demo-panel--fixed" role="tabpanel"
+              id="panel-cr-fixed" aria-labelledby="tab-cr-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — pause control, keyboard nav, ARIA labels</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Use Prev/Next or the pause button to navigate.
+                  Focusing any control automatically pauses the auto-advance.</p>
+
+                <div class="demo-carousel demo-carousel--fixed"
+                  role="region" aria-label="A11y tips" aria-roledescription="carousel">
+
+                  <div class="carousel-track" id="fixed-carousel-track"
+                    aria-live="off" aria-atomic="true">
+                    <div class="carousel-slide carousel-slide--1"
+                      role="group" aria-roledescription="slide" aria-label="Slide 1 of 3">
+                      <p class="carousel-slide__eyebrow">Tip 01</p>
+                      <p class="carousel-slide__title">Color Contrast</p>
+                      <p class="carousel-slide__body">Ensure a minimum 4.5:1 contrast ratio between text and its background.</p>
+                    </div>
+                    <div class="carousel-slide carousel-slide--2"
+                      role="group" aria-roledescription="slide" aria-label="Slide 2 of 3" hidden>
+                      <p class="carousel-slide__eyebrow">Tip 02</p>
+                      <p class="carousel-slide__title">Keyboard Access</p>
+                      <p class="carousel-slide__body">Every interactive element must be reachable and operable with a keyboard alone.</p>
+                    </div>
+                    <div class="carousel-slide carousel-slide--3"
+                      role="group" aria-roledescription="slide" aria-label="Slide 3 of 3" hidden>
+                      <p class="carousel-slide__eyebrow">Tip 03</p>
+                      <p class="carousel-slide__title">Label Your Forms</p>
+                      <p class="carousel-slide__body">Every input must have a visible, programmatically associated label.</p>
+                    </div>
+                  </div>
+
+                  <div class="carousel-controls">
+                    <button type="button" class="carousel-btn carousel-btn--prev" aria-label="Previous slide">
+                      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                        <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" class="carousel-btn carousel-btn--pause" aria-label="Pause auto-advance" aria-pressed="false">
+                      <svg class="icon-pause" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                        <rect x="4" y="3" width="3" height="10" rx="1" fill="currentColor"/>
+                        <rect x="9" y="3" width="3" height="10" rx="1" fill="currentColor"/>
+                      </svg>
+                      <svg class="icon-play" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16" hidden>
+                        <path d="M5 3l9 5-9 5V3z" fill="currentColor"/>
+                      </svg>
+                    </button>
+                    <button type="button" class="carousel-btn carousel-btn--next" aria-label="Next slide">
+                      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                        <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <span class="carousel-counter" aria-hidden="true">1 / 3</span>
+                  </div>
+
+                  <div class="carousel-dots" aria-hidden="true">
+                    <span class="carousel-dot carousel-dot--active"></span>
+                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- div, no controls, no ARIA --&gt;
+&lt;div class="carousel"&gt;
+  &lt;div class="slide"&gt;...&lt;/div&gt;
+  &lt;div class="slide"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- JS auto-advances, no pause --&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;div role="region"
+     aria-label="A11y tips"
+     aria-roledescription="carousel"&gt;
+  &lt;div aria-live="off"
+       aria-atomic="true"&gt;
+    &lt;div role="group"
+         aria-roledescription="slide"
+         aria-label="Slide 1 of 3"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button aria-label="Pause"
+          aria-pressed="false"
+          type="button"&gt;⏸&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>2.2.2 Pause, Stop, Hide (Level A) — any auto-advancing content must have a user-controlled pause mechanism</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Users with cognitive disabilities who need more reading time, users with attention disorders who find motion distracting, and screen reader users who are interrupted mid-sentence by a slide change</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Confirm a pause control exists and works. Tab through the carousel — all controls should be reachable, and focusing any should pause the auto-advance.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 13 — TOOLTIP
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-tooltip"
+        aria-labelledby="demo-13-heading"
+        data-demo="tooltip"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">13</span>
+          <h2 id="demo-13-heading" class="demo-title">Tooltip</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 1.4.13</span>
+            <span class="wcag-badge__level">Level AA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Custom tooltips are often triggered only on mouse hover — keyboard users who Tab
+          to an icon-only button never see the tooltip and can't tell what the control does.
+          The fix triggers tooltips on both hover and focus, associates them via
+          <code>aria-describedby</code>, and lets users dismiss them with Escape.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Tooltip: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true"
+              aria-controls="panel-tt-broken" id="tab-tt-broken" tabindex="0" type="button">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false"
+              aria-controls="panel-tt-fixed" id="tab-tt-fixed" tabindex="-1" type="button">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+
+            <!-- Broken panel -->
+            <div class="demo-panel demo-panel--broken" role="tabpanel"
+              id="panel-tt-broken" aria-labelledby="tab-tt-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — hover-only, no keyboard trigger, no ARIA</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Hover the buttons to see tooltips. Tab to them
+                  with a keyboard — no tooltip appears and there is no accessible name.</p>
+
+                <div class="tooltip-toolbar">
+                  <div class="tooltip-wrap tooltip-wrap--broken">
+                    <button class="icon-action-btn" type="button">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M4 3h9l3 3v11a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <rect x="6" y="13" width="8" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <rect x="7" y="3" width="5" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                      </svg>
+                    </button>
+                    <div class="tooltip-box tooltip-box--broken">Save</div>
+                  </div>
+                  <div class="tooltip-wrap tooltip-wrap--broken">
+                    <button class="icon-action-btn" type="button">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <circle cx="15" cy="4" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <circle cx="15" cy="16" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <circle cx="5" cy="10" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <path d="M7 9l6-3.5M7 11l6 3.5" stroke="currentColor" stroke-width="1.5"/>
+                      </svg>
+                    </button>
+                    <div class="tooltip-box tooltip-box--broken">Share</div>
+                  </div>
+                  <div class="tooltip-wrap tooltip-wrap--broken">
+                    <button class="icon-action-btn" type="button">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M4 6h12M8 6V4h4v2M7 9v7M13 9v7M5 6l1 11h8l1-11" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                      </svg>
+                    </button>
+                    <div class="tooltip-box tooltip-box--broken">Delete</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fixed panel -->
+            <div class="demo-panel demo-panel--fixed" role="tabpanel"
+              id="panel-tt-fixed" aria-labelledby="tab-tt-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — hover + focus trigger, aria-describedby, Escape dismisses</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Hover or Tab to the buttons — the tooltip appears
+                  either way. Press Escape to dismiss it.</p>
+
+                <div class="tooltip-toolbar">
+                  <div class="tooltip-wrap tooltip-wrap--fixed">
+                    <button class="icon-action-btn" type="button" aria-describedby="tooltip-save">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M4 3h9l3 3v11a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <rect x="6" y="13" width="8" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <rect x="7" y="3" width="5" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                      </svg>
+                      <span class="sr-only">Save</span>
+                    </button>
+                    <div role="tooltip" id="tooltip-save" class="tooltip-box tooltip-box--fixed" hidden>Save document</div>
+                  </div>
+                  <div class="tooltip-wrap tooltip-wrap--fixed">
+                    <button class="icon-action-btn" type="button" aria-describedby="tooltip-share">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <circle cx="15" cy="4" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <circle cx="15" cy="16" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <circle cx="5" cy="10" r="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <path d="M7 9l6-3.5M7 11l6 3.5" stroke="currentColor" stroke-width="1.5"/>
+                      </svg>
+                      <span class="sr-only">Share</span>
+                    </button>
+                    <div role="tooltip" id="tooltip-share" class="tooltip-box tooltip-box--fixed" hidden>Share with others</div>
+                  </div>
+                  <div class="tooltip-wrap tooltip-wrap--fixed">
+                    <button class="icon-action-btn" type="button" aria-describedby="tooltip-delete">
+                      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M4 6h12M8 6V4h4v2M7 9v7M13 9v7M5 6l1 11h8l1-11" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                    <div role="tooltip" id="tooltip-delete" class="tooltip-box tooltip-box--fixed" hidden>Delete permanently</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- no accessible name, hover-only --&gt;
+&lt;button type="button"&gt;
+  &lt;svg ...&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;div class="tooltip"&gt;Save&lt;/div&gt;
+&lt;!-- .tooltip shown via CSS :hover
+     on parent — never on :focus --&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;button type="button"
+        aria-describedby="tip-save"&gt;
+  &lt;svg ...&gt;&lt;/svg&gt;
+  &lt;span class="sr-only"&gt;Save&lt;/span&gt;
+&lt;/button&gt;
+&lt;div role="tooltip"
+     id="tip-save" hidden&gt;
+  Save document
+&lt;/div&gt;
+&lt;!-- JS shows on hover + focus;
+     Escape dismisses --&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>1.4.13 Content on Hover or Focus (Level AA) — additional content triggered by hover must also appear on focus, remain visible when hovered, and be dismissible with Escape</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard-only users who cannot hover; screen magnification users where hover content may appear off-screen; screen reader users who need the description programmatically associated</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Tab to each button — the tooltip should appear on focus. Move the cursor over the tooltip itself — it should stay visible. Press Escape — tooltip dismisses without moving focus.</dd>
             </div>
           </dl>
         </aside>

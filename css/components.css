@@ -1266,3 +1266,355 @@
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
 }
+
+/* Allow absolutely-positioned dropdowns to escape the panel bounds */
+#demo-meganav .demo-panel {
+  overflow: visible;
+}
+
+/* Re-apply corner clipping to the header (normally done by panel's overflow:hidden) */
+#demo-meganav .panel-header {
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+/* ─── Demo 11: Mega Navigation ────────────────────────────── */
+
+.demo-meganav {
+  font-size: var(--text-sm);
+}
+
+.demo-meganav__bar {
+  display: flex;
+  gap: var(--space-1);
+  list-style: none;
+  padding: var(--space-1);
+  margin: 0;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.demo-meganav__item {
+  position: relative;
+}
+
+.demo-meganav__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.demo-meganav__trigger--broken {
+  background: none;
+  border: none;
+  transition: background-color var(--transition-fast);
+}
+
+.demo-meganav__trigger--broken:hover,
+.demo-meganav__item:hover > .demo-meganav__trigger--broken {
+  background-color: var(--color-surface);
+}
+
+.demo-meganav__trigger--fixed {
+  background: none;
+  border: none;
+  transition: background-color var(--transition-fast);
+}
+
+.demo-meganav__trigger--fixed:hover {
+  background-color: var(--color-surface);
+}
+
+.demo-meganav__trigger--fixed:focus-visible {
+  outline: var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.demo-meganav__trigger--fixed[aria-expanded="true"] {
+  background-color: var(--color-surface);
+}
+
+.demo-meganav__chevron {
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.demo-meganav__trigger--fixed[aria-expanded="true"] .demo-meganav__chevron {
+  transform: rotate(180deg);
+}
+
+/* Broken dropdown: CSS :hover only */
+.demo-meganav--broken .demo-meganav__panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  min-width: 160px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / .12);
+  z-index: var(--z-dropdown, 100);
+  list-style: none;
+  margin: 0;
+}
+
+.demo-meganav--broken .demo-meganav__item:hover .demo-meganav__panel {
+  display: block;
+}
+
+.demo-meganav--broken .demo-meganav__panel a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+
+.demo-meganav--broken .demo-meganav__panel a:hover {
+  background-color: var(--color-surface-alt);
+}
+
+/* Fixed dropdown: JS-controlled with hidden attribute */
+.demo-meganav--fixed .demo-meganav__panel {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  min-width: 160px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / .12);
+  z-index: var(--z-dropdown, 100);
+  list-style: none;
+  margin: 0;
+}
+
+.demo-meganav--fixed .demo-meganav__panel[hidden] {
+  display: none;
+}
+
+.demo-meganav--fixed .demo-meganav__panel a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+
+.demo-meganav--fixed .demo-meganav__panel a:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.demo-meganav--fixed .demo-meganav__panel a:focus-visible {
+  outline: var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ─── Demo 12: Carousel ───────────────────────────────────── */
+
+.demo-carousel {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.carousel-track {
+  position: relative;
+}
+
+.carousel-slide {
+  padding: var(--space-6) var(--space-5);
+  min-height: 9rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.carousel-slide[hidden] {
+  display: none;
+}
+
+.carousel-slide--1 { background-color: var(--color-broken-bg); }
+.carousel-slide--2 { background-color: var(--color-fixed-bg); }
+.carousel-slide--3 { background-color: var(--color-surface-alt); }
+
+.carousel-slide__eyebrow {
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.carousel-slide__title {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.carousel-slide__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.carousel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.carousel-btn:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.carousel-btn:focus-visible {
+  outline: var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.carousel-btn svg[hidden] {
+  display: none;
+}
+
+.carousel-btn--pause[aria-pressed="true"] {
+  background-color: var(--color-surface-alt);
+  border-color: var(--color-text-secondary);
+}
+
+.carousel-counter {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-left: auto;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  transition: background-color var(--transition-fast);
+}
+
+.carousel-dot--active {
+  background-color: var(--color-text-secondary);
+}
+
+/* ─── Demo 13: Tooltip ────────────────────────────────────── */
+
+/* Allow tooltips to escape the panel bounds */
+#demo-tooltip .demo-panel {
+  overflow: visible;
+}
+
+#demo-tooltip .panel-header {
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.tooltip-toolbar {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.icon-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.icon-action-btn:hover {
+  background-color: var(--color-surface-alt);
+}
+
+.icon-action-btn:focus-visible {
+  outline: var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.tooltip-box {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: var(--text-xs, 0.75rem);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: var(--z-dropdown, 100);
+}
+
+.tooltip-box--broken {
+  display: none;
+  background-color: var(--color-text);
+  color: var(--color-surface);
+}
+
+.tooltip-wrap--broken:hover .tooltip-box--broken {
+  display: block;
+}
+
+.tooltip-box--fixed {
+  background-color: var(--color-text);
+  color: var(--color-surface);
+  pointer-events: auto;
+}
+
+.tooltip-box--fixed[hidden] {
+  display: none;
+}
