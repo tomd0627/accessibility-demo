@@ -3,6 +3,11 @@
    Typography, global defaults, and element-level styling.
    ============================================================================= */
 
+/* Hidden SVG sprite — class has higher specificity than reset's svg { display: block } */
+.svg-sprite {
+  display: none;
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
