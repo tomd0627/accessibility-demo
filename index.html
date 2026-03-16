@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A11y Demo — side-by-side broken vs. fixed examples of 10 common WCAG failures, with keyboard-interactive demonstrations.">
+  <meta property="og:title" content="A11y Demo">
+  <meta property="og:description" content="Side-by-side demos of 10 common accessibility failures and their correct implementations.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#3730a3">
+  <title>A11y Demo</title>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
+</head>
+<body>
+
+  <!-- SVG icon sprite -->
+  <svg aria-hidden="true" focusable="false" style="display:none">
+    <defs>
+      <symbol id="icon-broken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </symbol>
+      <symbol id="icon-fixed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </symbol>
+      <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </symbol>
+      <symbol id="icon-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Skip link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Site header -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <div class="site-header__brand">
+        <span class="site-header__title">A11y Demo</span>
+      </div>
+      <div class="site-header__actions">
+        <button
+          class="theme-toggle"
+          aria-label="Switch to dark mode"
+          aria-pressed="false"
+          data-theme-toggle
+        >
+          <svg aria-hidden="true" focusable="false" width="20" height="20" class="theme-toggle__icon theme-toggle__icon--sun"><use href="#icon-sun"/></svg>
+          <svg aria-hidden="true" focusable="false" width="20" height="20" class="theme-toggle__icon theme-toggle__icon--moon"><use href="#icon-moon"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page hero -->
+  <div class="page-hero">
+    <div class="page-hero__inner">
+      <p class="page-hero__label">Portfolio Project · WCAG 2.1</p>
+      <h1 class="page-hero__heading">Web Accessibility<br>in Practice</h1>
+      <p class="page-hero__description">
+        Ten common accessibility failures, side-by-side with their correct implementations.
+        Each demo is interactive — try them with a keyboard or screen reader.
+      </p>
+      <div class="page-hero__meta">
+        <span class="hero-badge">HTML Semantics</span>
+        <span class="hero-badge">ARIA</span>
+        <span class="hero-badge">Keyboard Nav</span>
+        <span class="hero-badge">WCAG 2.1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page body: sidebar nav + main -->
+  <div class="page-body">
+
+    <!-- In-page navigation -->
+    <nav class="demo-nav" aria-label="Jump to demo">
+      <!-- Mobile: collapsible -->
+      <details class="demo-nav__mobile">
+        <summary class="demo-nav__mobile-summary">Browse demos</summary>
+        <ol class="demo-nav__list">
+          <li><a href="#demo-color-contrast" class="demo-nav__link"><span class="demo-nav__num">01</span> Color Contrast</a></li>
+          <li><a href="#demo-alt-text" class="demo-nav__link"><span class="demo-nav__num">02</span> Alt Text</a></li>
+          <li><a href="#demo-form-labels" class="demo-nav__link"><span class="demo-nav__num">03</span> Form Labels</a></li>
+          <li><a href="#demo-focus-visible" class="demo-nav__link"><span class="demo-nav__num">04</span> Focus Visibility</a></li>
+          <li><a href="#demo-heading-structure" class="demo-nav__link"><span class="demo-nav__num">05</span> Heading Structure</a></li>
+          <li><a href="#demo-button-semantics" class="demo-nav__link"><span class="demo-nav__num">06</span> Button Semantics</a></li>
+          <li><a href="#demo-focus-trap" class="demo-nav__link"><span class="demo-nav__num">07</span> Modal Focus Trap</a></li>
+          <li><a href="#demo-live-regions" class="demo-nav__link"><span class="demo-nav__num">08</span> Live Regions</a></li>
+          <li><a href="#demo-skip-link" class="demo-nav__link"><span class="demo-nav__num">09</span> Skip Link</a></li>
+          <li><a href="#demo-reduced-motion" class="demo-nav__link"><span class="demo-nav__num">10</span> Reduced Motion</a></li>
+        </ol>
+      </details>
+      <!-- Desktop: always visible -->
+      <ol class="demo-nav__list demo-nav__list--desktop" aria-label="Demos">
+        <li><a href="#demo-color-contrast" class="demo-nav__link"><span class="demo-nav__num">01</span> Color Contrast</a></li>
+        <li><a href="#demo-alt-text" class="demo-nav__link"><span class="demo-nav__num">02</span> Alt Text</a></li>
+        <li><a href="#demo-form-labels" class="demo-nav__link"><span class="demo-nav__num">03</span> Form Labels</a></li>
+        <li><a href="#demo-focus-visible" class="demo-nav__link"><span class="demo-nav__num">04</span> Focus Visibility</a></li>
+        <li><a href="#demo-heading-structure" class="demo-nav__link"><span class="demo-nav__num">05</span> Heading Structure</a></li>
+        <li><a href="#demo-button-semantics" class="demo-nav__link"><span class="demo-nav__num">06</span> Button Semantics</a></li>
+        <li><a href="#demo-focus-trap" class="demo-nav__link"><span class="demo-nav__num">07</span> Modal Focus Trap</a></li>
+        <li><a href="#demo-live-regions" class="demo-nav__link"><span class="demo-nav__num">08</span> Live Regions</a></li>
+        <li><a href="#demo-skip-link" class="demo-nav__link"><span class="demo-nav__num">09</span> Skip Link</a></li>
+        <li><a href="#demo-reduced-motion" class="demo-nav__link"><span class="demo-nav__num">10</span> Reduced Motion</a></li>
+      </ol>
+    </nav>
+
+    <!-- Main content -->
+    <main id="main-content" class="demo-main">
+
+      <!-- ============================================================
+           DEMO 01 — COLOR CONTRAST
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-color-contrast"
+        aria-labelledby="demo-01-heading"
+        data-demo="color-contrast"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">01</span>
+          <h2 id="demo-01-heading" class="demo-title">Color Contrast</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 1.4.3</span>
+            <span class="wcag-badge__level">Level AA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Text must have a contrast ratio of at least <strong>4.5:1</strong> against its background
+          (3:1 for large text). Low-contrast text fails users with low vision, in bright sunlight,
+          or on low-quality screens.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Color contrast: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-cc-broken" id="tab-cc-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-cc-fixed" id="tab-cc-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-cc-broken" aria-labelledby="tab-cc-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken</span>
+                <code class="panel-header__code">color: #9ca3af on #ffffff</code>
+              </div>
+              <div class="panel-body">
+                <div class="cc-demo cc-demo--broken">
+                  <p class="cc-demo__text cc-broken-text">
+                    The quick brown fox jumps over the lazy dog.
+                    This text is styled with low contrast gray — it looks subtle, but it fails WCAG.
+                  </p>
+                  <p class="cc-demo__label">Contrast ratio: <strong class="cc-ratio cc-ratio--broken">2.3:1</strong> <span class="cc-fail-badge">Fails AA</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-cc-fixed" aria-labelledby="tab-cc-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed</span>
+                <code class="panel-header__code">color: #374151 on #ffffff</code>
+              </div>
+              <div class="panel-body">
+                <div class="cc-demo cc-demo--fixed">
+                  <p class="cc-demo__text cc-fixed-text">
+                    The quick brown fox jumps over the lazy dog.
+                    This text uses sufficient contrast — readable for everyone.
+                  </p>
+                  <p class="cc-demo__label">Contrast ratio: <strong class="cc-ratio cc-ratio--fixed">10.7:1</strong> <span class="cc-pass-badge">Passes AAA</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive contrast checker -->
+        <div class="contrast-checker" aria-label="Live contrast ratio calculator">
+          <h3 class="contrast-checker__heading">Try it: Live Contrast Checker</h3>
+          <div class="contrast-checker__controls">
+            <div class="contrast-checker__field">
+              <label for="cc-text-color" class="contrast-checker__label">Text color</label>
+              <div class="contrast-checker__input-row">
+                <input type="color" id="cc-text-color" value="#374151" class="contrast-checker__color-input" aria-describedby="cc-text-hex">
+                <input type="text" id="cc-text-hex" value="#374151" class="contrast-checker__hex-input" aria-label="Text color hex value" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$">
+              </div>
+            </div>
+            <div class="contrast-checker__field">
+              <label for="cc-bg-color" class="contrast-checker__label">Background color</label>
+              <div class="contrast-checker__input-row">
+                <input type="color" id="cc-bg-color" value="#ffffff" class="contrast-checker__color-input" aria-describedby="cc-bg-hex">
+                <input type="text" id="cc-bg-hex" value="#ffffff" class="contrast-checker__hex-input" aria-label="Background color hex value" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$">
+              </div>
+            </div>
+          </div>
+          <div class="contrast-checker__result" aria-live="polite" aria-atomic="true">
+            <div class="contrast-checker__preview" id="cc-preview">
+              Sample text
+            </div>
+            <dl class="contrast-checker__scores">
+              <div class="contrast-checker__score">
+                <dt>Contrast ratio</dt>
+                <dd id="cc-ratio-output" class="contrast-checker__ratio">10.7:1</dd>
+              </div>
+              <div class="contrast-checker__score">
+                <dt>Normal text (AA)</dt>
+                <dd id="cc-normal-aa" class="contrast-checker__verdict">Pass</dd>
+              </div>
+              <div class="contrast-checker__score">
+                <dt>Large text (AA)</dt>
+                <dd id="cc-large-aa" class="contrast-checker__verdict">Pass</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>/* Insufficient contrast */
+.text {
+  color: #9ca3af;
+  background: #ffffff;
+  /* Ratio: 2.3:1 — Fails AA */
+}</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>/* Sufficient contrast */
+.text {
+  color: #374151;
+  background: #ffffff;
+  /* Ratio: 10.7:1 — Passes AAA */
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>1.4.3 Contrast (Minimum) — Level AA</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Users with low vision, color blindness, or in high-glare environments</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Browser DevTools → Accessibility panel, axe DevTools, WAVE, or WebAIM Contrast Checker</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 02 — ALT TEXT
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-alt-text"
+        aria-labelledby="demo-02-heading"
+        data-demo="alt-text"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">02</span>
+          <h2 id="demo-02-heading" class="demo-title">Alt Text</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 1.1.1</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Every meaningful image needs a text alternative that conveys the same information.
+          Decorative images should use <code>alt=""</code> so screen readers skip them entirely.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Alt text: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-at-broken" id="tab-at-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-at-fixed" id="tab-at-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-at-broken" aria-labelledby="tab-at-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken</span>
+              </div>
+              <div class="panel-body">
+                <div class="alt-text-demo">
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Informative image — missing alt</p>
+                    <!-- Intentionally broken: missing alt attribute -->
+                    <div class="alt-text-image-wrapper">
+                      <div class="alt-text-image-placeholder" role="img">
+                        <span aria-hidden="true">📊</span>
+                      </div>
+                    </div>
+                    <div class="sr-simulation sr-simulation--broken" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output">"image"</span>
+                    </div>
+                  </div>
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Functional image — meaningless alt</p>
+                    <div class="alt-text-image-wrapper">
+                      <button class="alt-text-btn-broken" aria-label="image.png">
+                        <span aria-hidden="true">🔍</span>
+                      </button>
+                    </div>
+                    <div class="sr-simulation sr-simulation--broken" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output">"image.png, button"</span>
+                    </div>
+                  </div>
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Decorative image — redundant alt</p>
+                    <div class="alt-text-image-wrapper">
+                      <div class="alt-text-image-placeholder" role="img" aria-label="decorative squiggly line divider image">
+                        <span aria-hidden="true">〰️</span>
+                      </div>
+                    </div>
+                    <div class="sr-simulation sr-simulation--broken" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output">"decorative squiggly line divider image"</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-at-fixed" aria-labelledby="tab-at-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed</span>
+              </div>
+              <div class="panel-body">
+                <div class="alt-text-demo">
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Informative image — descriptive alt</p>
+                    <div class="alt-text-image-wrapper">
+                      <div class="alt-text-image-placeholder" role="img" aria-label="Bar chart showing Q4 revenue up 23% year-over-year">
+                        <span aria-hidden="true">📊</span>
+                      </div>
+                    </div>
+                    <div class="sr-simulation sr-simulation--fixed" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output">"Bar chart showing Q4 revenue up 23% year-over-year"</span>
+                    </div>
+                  </div>
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Functional image — action-based alt</p>
+                    <div class="alt-text-image-wrapper">
+                      <button class="alt-text-btn-fixed" aria-label="Search products">
+                        <span aria-hidden="true">🔍</span>
+                      </button>
+                    </div>
+                    <div class="sr-simulation sr-simulation--fixed" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output">"Search products, button"</span>
+                    </div>
+                  </div>
+                  <div class="alt-text-case">
+                    <p class="alt-text-case__label">Decorative image — empty alt</p>
+                    <div class="alt-text-image-wrapper">
+                      <div class="alt-text-image-placeholder" role="presentation" aria-hidden="true">
+                        <span aria-hidden="true">〰️</span>
+                      </div>
+                    </div>
+                    <div class="sr-simulation sr-simulation--fixed" aria-hidden="true">
+                      <span class="sr-simulation__label">Screen reader says:</span>
+                      <span class="sr-simulation__output"><em>(silence — image is skipped)</em></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- Missing alt --&gt;
+&lt;img src="chart.png"&gt;
+
+&lt;!-- Filename as alt --&gt;
+&lt;button&gt;
+  &lt;img src="search.png"
+       alt="search.png"&gt;
+&lt;/button&gt;
+
+&lt;!-- Noisy decorative alt --&gt;
+&lt;img src="divider.png"
+     alt="squiggly line"&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;!-- Descriptive alt --&gt;
+&lt;img src="chart.png"
+     alt="Bar chart: Q4 revenue up 23%"&gt;
+
+&lt;!-- Alt describes the action --&gt;
+&lt;button&gt;
+  &lt;img src="search.png"
+       alt="Search products"&gt;
+&lt;/button&gt;
+
+&lt;!-- Empty alt for decorative --&gt;
+&lt;img src="divider.png" alt=""&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>1.1.1 Non-text Content — Level A</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Blind users, users with images disabled, search engines</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Run axe, WAVE, or inspect each image element for a meaningful alt attribute</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 03 — FORM LABELS
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-form-labels"
+        aria-labelledby="demo-03-heading"
+        data-demo="form-labels"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">03</span>
+          <h2 id="demo-03-heading" class="demo-title">Form Labels</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 1.3.1 · 3.3.2</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Placeholder text is not a label. It disappears on focus, leaving users without context.
+          Every input needs a persistently visible, programmatically associated <code>&lt;label&gt;</code>.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Form labels: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-fl-broken" id="tab-fl-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-fl-fixed" id="tab-fl-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-fl-broken" aria-labelledby="tab-fl-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — placeholder only</span>
+              </div>
+              <div class="panel-body">
+                <form class="demo-form" novalidate aria-label="Broken form example — do not submit">
+                  <div class="form-group">
+                    <!-- No label — placeholder is the only hint -->
+                    <input type="text" placeholder="Full name" class="form-input form-input--broken" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <input type="email" placeholder="Email address" class="form-input form-input--broken" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <input type="tel" placeholder="Phone number" class="form-input form-input--broken" autocomplete="off">
+                  </div>
+                  <p class="form-note form-note--broken">Click any field — the placeholder disappears, leaving no hint of what to type.</p>
+                </form>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-fl-fixed" aria-labelledby="tab-fl-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — proper labels</span>
+              </div>
+              <div class="panel-body">
+                <form class="demo-form" novalidate aria-label="Fixed form example — do not submit">
+                  <div class="form-group">
+                    <label for="fixed-name" class="form-label">Full name</label>
+                    <input type="text" id="fixed-name" placeholder="e.g. Jane Smith" class="form-input form-input--fixed" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="fixed-email" class="form-label">Email address</label>
+                    <input type="email" id="fixed-email" placeholder="e.g. jane@example.com" class="form-input form-input--fixed" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="fixed-phone" class="form-label">
+                      Phone number
+                      <span class="form-label__hint">(optional)</span>
+                    </label>
+                    <input type="tel" id="fixed-phone" placeholder="e.g. (555) 000-0000" class="form-input form-input--fixed" autocomplete="off">
+                  </div>
+                  <p class="form-note form-note--fixed">Labels persist above each field — context is never lost on focus.</p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- No label element --&gt;
+&lt;input
+  type="email"
+  placeholder="Email"&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;!-- Visible, associated label --&gt;
+&lt;label for="email"&gt;
+  Email address
+&lt;/label&gt;
+&lt;input
+  type="email"
+  id="email"
+  placeholder="e.g. jane@example.com"&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criteria</dt>
+              <dd>1.3.1 Info and Relationships — Level A<br>3.3.2 Labels or Instructions — Level A</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Screen reader users, users with cognitive disabilities, autofill users</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Tab into each input and check whether a label is announced. Verify no label disappears on focus.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 04 — FOCUS VISIBILITY
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-focus-visible"
+        aria-labelledby="demo-04-heading"
+        data-demo="focus-visible"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">04</span>
+          <h2 id="demo-04-heading" class="demo-title">Focus Visibility</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.4.7 · 2.4.11</span>
+            <span class="wcag-badge__level">Level AA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Removing the focus outline is one of the most common and harmful accessibility mistakes.
+          Keyboard users <em>rely</em> on visible focus to navigate. Use <code>:focus-visible</code>
+          to show focus rings for keyboard navigation without affecting mouse users.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Focus visibility: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-fv-broken" id="tab-fv-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-fv-fixed" id="tab-fv-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-fv-broken" aria-labelledby="tab-fv-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — <code>outline: none</code></span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Tab through these links with your keyboard. Where is the focus?</p>
+                <nav aria-label="Broken focus demo navigation">
+                  <ul class="focus-demo-nav focus-demo-nav--broken">
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--broken">Home</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--broken">About</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--broken">Work</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--broken">Contact</a></li>
+                  </ul>
+                </nav>
+                <p class="focus-demo-result focus-demo-result--broken" aria-live="polite">Focus is invisible — keyboard users are lost.</p>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-fv-fixed" aria-labelledby="tab-fv-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — <code>:focus-visible</code></span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Tab through these links — a clear focus ring follows your position.</p>
+                <nav aria-label="Fixed focus demo navigation">
+                  <ul class="focus-demo-nav focus-demo-nav--fixed">
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--fixed">Home</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--fixed">About</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--fixed">Work</a></li>
+                    <li><a href="#demo-focus-visible" class="focus-demo-link focus-demo-link--fixed">Contact</a></li>
+                  </ul>
+                </nav>
+                <p class="focus-demo-result focus-demo-result--fixed" id="fv-focus-tracker" aria-live="polite">Tab to see which link has focus.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>/* Removes focus for everyone */
+a:focus {
+  outline: none;
+}</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>/* Only shows for keyboard nav */
+a:focus-visible {
+  outline: 3px solid #ca8a04;
+  outline-offset: 3px;
+  border-radius: 2px;
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criteria</dt>
+              <dd>2.4.7 Focus Visible — Level AA<br>2.4.11 Focus Appearance — Level AA (WCAG 2.2)</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard-only users, motor-impaired users, power users who prefer keyboard navigation</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Tab through the entire page without a mouse. Every interactive element must show a visible focus indicator at all times.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 05 — HEADING STRUCTURE
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-heading-structure"
+        aria-labelledby="demo-05-heading"
+        data-demo="heading-structure"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">05</span>
+          <h2 id="demo-05-heading" class="demo-title">Heading Structure</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 1.3.1 · 2.4.6</span>
+            <span class="wcag-badge__level">Level A / AA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Screen reader users navigate pages by jumping between headings — it's their table of contents.
+          Skipped levels and non-semantic markup break that navigation entirely.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Heading structure: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-hs-broken" id="tab-hs-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-hs-fixed" id="tab-hs-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-hs-broken" aria-labelledby="tab-hs-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — skipped levels, div soup</span>
+              </div>
+              <div class="panel-body">
+                <div class="heading-demo">
+                  <div class="heading-outline heading-outline--broken" aria-label="Document outline — broken">
+                    <p class="heading-outline__label">Document outline (screen reader sees):</p>
+                    <ul class="heading-outline__list">
+                      <li class="heading-outline__item heading-outline__item--h1">h1: Page Title</li>
+                      <li class="heading-outline__item heading-outline__item--h4">h4: Section A <span class="heading-outline__gap">⚠ skipped h2, h3</span></li>
+                      <li class="heading-outline__item heading-outline__item--h2">h2: Section B</li>
+                      <li class="heading-outline__item heading-outline__item--h5">h5: Subsection <span class="heading-outline__gap">⚠ skipped h3, h4</span></li>
+                      <li class="heading-outline__item heading-outline__item--none">div: "Section C" <span class="heading-outline__gap">⚠ not a heading at all</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-hs-fixed" aria-labelledby="tab-hs-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — logical hierarchy</span>
+              </div>
+              <div class="panel-body">
+                <div class="heading-demo">
+                  <div class="heading-outline heading-outline--fixed" aria-label="Document outline — fixed">
+                    <p class="heading-outline__label">Document outline (screen reader sees):</p>
+                    <ul class="heading-outline__list">
+                      <li class="heading-outline__item heading-outline__item--h1">h1: Page Title</li>
+                      <li class="heading-outline__item heading-outline__item--h2">h2: Section A</li>
+                      <li class="heading-outline__item heading-outline__item--h3">h3: Subsection A.1</li>
+                      <li class="heading-outline__item heading-outline__item--h2">h2: Section B</li>
+                      <li class="heading-outline__item heading-outline__item--h3">h3: Subsection B.1</li>
+                      <li class="heading-outline__item heading-outline__item--h2">h2: Section C</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;h1&gt;Page Title&lt;/h1&gt;
+&lt;!-- jumped from h1 to h4 --&gt;
+&lt;h4&gt;Section A&lt;/h4&gt;
+&lt;h2&gt;Section B&lt;/h2&gt;
+&lt;!-- not a heading at all --&gt;
+&lt;div class="big-text"&gt;Section C&lt;/div&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;h1&gt;Page Title&lt;/h1&gt;
+&lt;h2&gt;Section A&lt;/h2&gt;
+  &lt;h3&gt;Subsection A.1&lt;/h3&gt;
+&lt;h2&gt;Section B&lt;/h2&gt;
+  &lt;h3&gt;Subsection B.1&lt;/h3&gt;
+&lt;h2&gt;Section C&lt;/h2&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criteria</dt>
+              <dd>1.3.1 Info and Relationships — Level A<br>2.4.6 Headings and Labels — Level AA</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Screen reader users, SEO crawlers, users who rely on page structure to navigate quickly</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Use the axe "Headings" panel, or in NVDA/VoiceOver press H to jump between headings and verify logical order.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 06 — BUTTON SEMANTICS
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-button-semantics"
+        aria-labelledby="demo-06-heading"
+        data-demo="button-vs-div"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">06</span>
+          <h2 id="demo-06-heading" class="demo-title">Button Semantics</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 4.1.2 · 2.1.1</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Using <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> as clickable controls is a
+          common anti-pattern. They're invisible to keyboards and screen readers unless you manually
+          recreate what <code>&lt;button&gt;</code> gives you for free.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Button semantics: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-bs-broken" id="tab-bs-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-bs-fixed" id="tab-bs-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-bs-broken" aria-labelledby="tab-bs-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — <code>&lt;div&gt;</code> as button</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Try to Tab to the buttons below. Then try clicking one.</p>
+                <div class="button-demo">
+                  <!-- Intentionally broken: div with click handler, not keyboard accessible -->
+                  <div class="fake-button fake-button--primary" data-broken-btn>Add to Cart</div>
+                  <div class="fake-button fake-button--secondary" data-broken-btn>Save for Later</div>
+                </div>
+                <p class="button-demo-result button-demo-result--broken" id="bs-broken-result" aria-live="polite">These divs are unreachable by keyboard. Try pressing Tab.</p>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-bs-fixed" aria-labelledby="tab-bs-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — semantic <code>&lt;button&gt;</code></span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Tab to these buttons, then activate with Enter or Space.</p>
+                <div class="button-demo">
+                  <button class="real-button real-button--primary" data-fixed-btn="add">Add to Cart</button>
+                  <button class="real-button real-button--secondary" data-fixed-btn="save">Save for Later</button>
+                </div>
+                <p class="button-demo-result button-demo-result--fixed" id="bs-fixed-result" aria-live="polite">Tab here, then press Enter or Space to activate.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- Not keyboard accessible --&gt;
+&lt;!-- No role, no name, no focus --&gt;
+&lt;div onclick="addToCart()"&gt;
+  Add to Cart
+&lt;/div&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;!-- Keyboard, role, name: all free --&gt;
+&lt;button type="button"
+        onclick="addToCart()"&gt;
+  Add to Cart
+&lt;/button&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criteria</dt>
+              <dd>4.1.2 Name, Role, Value — Level A<br>2.1.1 Keyboard — Level A</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard users, screen reader users, users with motor disabilities using switch access</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Tab to every interactive element. If you can't reach it with a keyboard, it fails. Inspect the element — if it's not <code>button</code>, <code>a</code>, <code>input</code>, <code>select</code>, or <code>textarea</code>, investigate.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 07 — MODAL FOCUS TRAP
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-focus-trap"
+        aria-labelledby="demo-07-heading"
+        data-demo="modal-focus-trap"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">07</span>
+          <h2 id="demo-07-heading" class="demo-title">Modal Focus Trap</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.1.2</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          When a modal dialog opens, keyboard focus must be trapped inside it. Focus should not
+          leak into background content. When closed, focus must return to the element that opened it.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Modal focus trap: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-ft-broken" id="tab-ft-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-ft-fixed" id="tab-ft-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-ft-broken" aria-labelledby="tab-ft-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — focus escapes modal</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Open the modal and press Tab repeatedly — focus will escape into the page behind it.</p>
+                <button class="real-button real-button--primary" id="open-broken-modal">Open broken modal</button>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-ft-fixed" aria-labelledby="tab-ft-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — focus trapped, Escape closes</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Open the modal, Tab through it — focus stays inside. Press Escape or Close to dismiss and return focus.</p>
+                <button class="real-button real-button--primary" id="open-fixed-modal">Open accessible modal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Broken modal (not a dialog — no trap, no ARIA) -->
+        <div class="modal-backdrop modal-backdrop--broken" id="broken-modal-backdrop" hidden>
+          <div class="modal-box modal-box--broken" id="broken-modal">
+            <h3 class="modal-title">Subscribe to newsletter</h3>
+            <p>Enter your email to get updates.</p>
+            <div class="modal-form">
+              <input type="email" placeholder="your@email.com" class="form-input" autocomplete="off">
+              <button class="real-button real-button--primary" id="close-broken-modal">Subscribe</button>
+            </div>
+            <p class="modal-note modal-note--broken">Focus is not trapped — Tab past "Subscribe" and focus leaves the modal.</p>
+          </div>
+        </div>
+
+        <!-- Fixed modal (proper dialog with focus trap) -->
+        <div class="modal-backdrop modal-backdrop--fixed" id="fixed-modal-backdrop" hidden>
+          <div
+            class="modal-box modal-box--fixed"
+            id="fixed-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="fixed-modal-title"
+            tabindex="-1"
+          >
+            <div class="modal-header">
+              <h3 class="modal-title" id="fixed-modal-title">Subscribe to newsletter</h3>
+              <button class="modal-close" id="close-fixed-modal" aria-label="Close dialog">
+                <svg aria-hidden="true" focusable="false" width="20" height="20"><use href="#icon-broken"/></svg>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Enter your email to get updates.</p>
+              <div class="modal-form">
+                <label for="modal-email" class="form-label">Email address</label>
+                <input type="email" id="modal-email" placeholder="your@email.com" class="form-input" autocomplete="off">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="real-button real-button--primary" id="modal-subscribe-btn">Subscribe</button>
+              <button class="real-button real-button--ghost" id="modal-cancel-btn">Cancel</button>
+            </div>
+            <p class="modal-note modal-note--fixed">Focus is trapped inside. Press Escape or Cancel to close and return focus to the trigger button.</p>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- div, no ARIA, no trap --&gt;
+&lt;div class="modal"&gt;
+  ...content...
+&lt;/div&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;div role="dialog"
+     aria-modal="true"
+     aria-labelledby="modal-title"
+     tabindex="-1"&gt;
+  &lt;h2 id="modal-title"&gt;...&lt;/h2&gt;
+  ...content...
+&lt;/div&gt;
+&lt;!-- JS traps focus + handles Escape --&gt;
+&lt;!-- inert attr applied to siblings --&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>2.1.2 No Keyboard Trap — Level A (the positive inverse: modal dialogs must trap focus intentionally)</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard users, screen reader users — without a trap, they lose their place in complex pages</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Open a modal, Tab through all focusable elements — focus should cycle within. Press Escape — modal should close and return focus to the trigger.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 08 — LIVE REGIONS
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-live-regions"
+        aria-labelledby="demo-08-heading"
+        data-demo="live-region"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">08</span>
+          <h2 id="demo-08-heading" class="demo-title">Live Regions</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 4.1.3</span>
+            <span class="wcag-badge__level">Level AA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          When content updates dynamically — search results, form errors, loading states — screen
+          readers need to be told. Without <code>aria-live</code>, these updates are silent.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Live regions: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-lr-broken" id="tab-lr-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-lr-fixed" id="tab-lr-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-lr-broken" aria-labelledby="tab-lr-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — silent updates</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Click "Save" — visually the status updates, but a screen reader hears nothing.</p>
+                <div class="live-region-demo">
+                  <button class="real-button real-button--primary" id="lr-broken-save">Save settings</button>
+                  <div class="live-demo-status live-demo-status--broken" id="lr-broken-status">
+                    <!-- Status updates visually but no aria-live -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-lr-fixed" aria-labelledby="tab-lr-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — <code>role="status"</code> announces</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-instruction">Click "Save" — the update is announced to screen readers via a live region.</p>
+                <div class="live-region-demo">
+                  <button class="real-button real-button--primary" id="lr-fixed-save">Save settings</button>
+                  <div class="live-demo-status live-demo-status--fixed" id="lr-fixed-status" role="status" aria-live="polite" aria-atomic="true">
+                    <!-- Announced via aria-live -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;!-- No live region --&gt;
+&lt;div id="status"&gt;&lt;/div&gt;
+
+// JS updates visually only
+status.textContent = 'Saved!';</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;!-- Announced on change --&gt;
+&lt;div id="status"
+     role="status"
+     aria-live="polite"
+     aria-atomic="true"&gt;
+&lt;/div&gt;
+
+// Same JS update — now announced
+status.textContent = 'Settings saved.';</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>4.1.3 Status Messages — Level AA</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Screen reader users who can't see visual state changes in dynamic interfaces</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Enable a screen reader (NVDA, VoiceOver, or JAWS). Trigger an async action — the result must be announced without moving focus.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 09 — SKIP LINK
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-skip-link"
+        aria-labelledby="demo-09-heading"
+        data-demo="skip-link"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">09</span>
+          <h2 id="demo-09-heading" class="demo-title">Skip Link</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.4.1</span>
+            <span class="wcag-badge__level">Level A</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Without a skip link, keyboard users must Tab through every navigation item on every page
+          load before reaching content. A single visually-hidden link at the top of the page solves this.
+          <strong>This page's own skip link is the live demonstration — press Tab on page load.</strong>
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Skip link: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-sl-broken" id="tab-sl-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-sl-fixed" id="tab-sl-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-sl-broken" aria-labelledby="tab-sl-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — no skip link</span>
+              </div>
+              <div class="panel-body">
+                <div class="skip-demo skip-demo--broken">
+                  <p class="panel-instruction">Simulated keyboard navigation without a skip link:</p>
+                  <div class="tab-counter" id="skip-broken-counter" aria-label="Tab key simulation">
+                    <div class="tab-counter__visual">
+                      <div class="tab-item tab-item--nav">Logo</div>
+                      <div class="tab-item tab-item--nav">Home</div>
+                      <div class="tab-item tab-item--nav">About</div>
+                      <div class="tab-item tab-item--nav">Work</div>
+                      <div class="tab-item tab-item--nav">Contact</div>
+                      <div class="tab-item tab-item--content tab-item--target">📄 Content</div>
+                    </div>
+                    <p class="tab-counter__label">6 Tab presses to reach content on every page load</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-sl-fixed" aria-labelledby="tab-sl-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — skip link present</span>
+              </div>
+              <div class="panel-body">
+                <div class="skip-demo skip-demo--fixed">
+                  <p class="panel-instruction">Simulated keyboard navigation with a skip link:</p>
+                  <div class="tab-counter" id="skip-fixed-counter" aria-label="Tab key simulation">
+                    <div class="tab-counter__visual">
+                      <div class="tab-item tab-item--skip">⬆ Skip to content</div>
+                      <div class="tab-item tab-item--content tab-item--target">📄 Content</div>
+                    </div>
+                    <p class="tab-counter__label">2 Tab presses — press Enter on the skip link to jump directly.</p>
+                  </div>
+                  <div class="skip-demo__cta">
+                    <p>Try it on <em>this page</em>: scroll back to the top and press <kbd>Tab</kbd> — the "Skip to main content" link will appear.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>&lt;body&gt;
+  &lt;!-- No skip link --&gt;
+  &lt;nav&gt;...10 links...&lt;/nav&gt;
+  &lt;main&gt;Content&lt;/main&gt;
+&lt;/body&gt;</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>&lt;body&gt;
+  &lt;!-- First focusable element --&gt;
+  &lt;a href="#main" class="skip-link"&gt;
+    Skip to main content
+  &lt;/a&gt;
+  &lt;nav&gt;...10 links...&lt;/nav&gt;
+  &lt;main id="main"&gt;Content&lt;/main&gt;
+&lt;/body&gt;
+
+/* Visible only on focus */
+.skip-link {
+  position: absolute;
+  transform: translateY(-100%);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>2.4.1 Bypass Blocks — Level A</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Keyboard-only users and screen reader users who visit the same site repeatedly</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Press Tab as the very first action on the page. A "Skip to main content" link must appear and function.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <!-- ============================================================
+           DEMO 10 — REDUCED MOTION
+      ============================================================ -->
+      <section
+        class="demo-section"
+        id="demo-reduced-motion"
+        aria-labelledby="demo-10-heading"
+        data-demo="motion"
+      >
+        <div class="demo-header">
+          <span class="demo-number" aria-hidden="true">10</span>
+          <h2 id="demo-10-heading" class="demo-title">Reduced Motion</h2>
+          <div class="wcag-badge">
+            <span class="wcag-badge__criterion">SC 2.3.3</span>
+            <span class="wcag-badge__level">Level AAA</span>
+          </div>
+        </div>
+
+        <p class="demo-description">
+          Persistent, large-scale motion can trigger vestibular disorders — causing nausea,
+          dizziness, and migraines. Respecting <code>prefers-reduced-motion</code> is a
+          straightforward, high-impact fix. Listed as AAA, but failure has real physical consequences.
+        </p>
+
+        <div class="demo-panel-group" role="group" aria-label="Reduced motion: broken and fixed comparison">
+          <div class="demo-tabs" role="tablist" aria-label="View broken or fixed implementation">
+            <button class="demo-tab demo-tab--broken" role="tab" aria-selected="true" aria-controls="panel-rm-broken" id="tab-rm-broken" tabindex="0">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+              Broken
+            </button>
+            <button class="demo-tab demo-tab--fixed" role="tab" aria-selected="false" aria-controls="panel-rm-fixed" id="tab-rm-fixed" tabindex="-1">
+              <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+              Fixed
+            </button>
+          </div>
+
+          <div class="demo-panels">
+            <div class="demo-panel demo-panel--broken" role="tabpanel" id="panel-rm-broken" aria-labelledby="tab-rm-broken">
+              <div class="panel-header panel-header--broken">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-broken"/></svg>
+                <span>Broken — ignores OS preference</span>
+              </div>
+              <div class="panel-body">
+                <div class="motion-demo">
+                  <div class="motion-demo__stage">
+                    <div class="motion-box motion-box--broken" aria-hidden="true"></div>
+                  </div>
+                  <p class="motion-demo__label">This animation plays regardless of the user's OS motion setting.</p>
+                  <button class="real-button real-button--secondary" id="rm-broken-toggle">Pause animation</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel demo-panel--fixed" role="tabpanel" id="panel-rm-fixed" aria-labelledby="tab-rm-fixed" hidden>
+              <div class="panel-header panel-header--fixed">
+                <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-fixed"/></svg>
+                <span>Fixed — respects <code>prefers-reduced-motion</code></span>
+              </div>
+              <div class="panel-body">
+                <div class="motion-demo">
+                  <div class="motion-demo__stage">
+                    <div class="motion-box motion-box--fixed" aria-hidden="true"></div>
+                  </div>
+                  <p class="motion-demo__label" id="rm-fixed-label">
+                    Animation respects your OS preference. Use the toggle below to simulate.
+                  </p>
+                  <button class="real-button real-button--secondary" id="rm-fixed-toggle" aria-pressed="false">
+                    Simulate reduced motion
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="demo-code">
+          <summary class="demo-code__summary">View code</summary>
+          <div class="demo-code__body">
+            <div class="code-diff">
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--broken">Broken</p>
+                <pre class="code-diff__pre code-diff__pre--broken"><code>/* Animation always plays */
+.box {
+  animation: spin 2s
+    linear infinite;
+}</code></pre>
+              </div>
+              <div class="code-diff__col">
+                <p class="code-diff__label code-diff__label--fixed">Fixed</p>
+                <pre class="code-diff__pre code-diff__pre--fixed"><code>/* Animation plays by default */
+.box {
+  animation: spin 2s
+    linear infinite;
+}
+
+/* Removed when user prefers it */
+@media (prefers-reduced-motion: reduce) {
+  .box {
+    animation: none;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <aside class="wcag-annotation" aria-label="WCAG criteria">
+          <h3 class="wcag-annotation__heading">
+            <svg aria-hidden="true" focusable="false" width="16" height="16"><use href="#icon-info"/></svg>
+            Why this matters
+          </h3>
+          <dl class="wcag-annotation__list">
+            <div class="wcag-annotation__item">
+              <dt>Success Criterion</dt>
+              <dd>2.3.3 Animation from Interactions — Level AAA<br>(Still widely expected; failure causes physical harm)</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>Who it affects</dt>
+              <dd>Users with vestibular disorders, epilepsy, or migraine sensitivity — including many people who don't know this setting exists</dd>
+            </div>
+            <div class="wcag-annotation__item">
+              <dt>How to test</dt>
+              <dd>Enable "Reduce Motion" in your OS accessibility settings (macOS: System Settings → Accessibility → Display; Windows: Settings → Ease of Access → Display). All non-essential animation should stop or be replaced with a simple fade.</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+    </main>
+  </div><!-- /.page-body -->
+
+  <!-- Site footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <p class="site-footer__tech">No frameworks · No build step · WCAG 2.1 AA</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
