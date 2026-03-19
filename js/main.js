@@ -130,6 +130,7 @@ function initMobileNav() {
 function initNavHighlight() {
   const navLinks = [...document.querySelectorAll('.demo-nav__link')];
   const sections = [...document.querySelectorAll('.demo-section[id]')];
+  const mobileSummary = document.querySelector('.demo-nav__mobile-summary');
 
   if (navLinks.length === 0 || sections.length === 0) return;
 
@@ -142,8 +143,12 @@ function initNavHighlight() {
         navLinks.forEach((link) => {
           const isActive = link.getAttribute('href') === `#${id}`;
           link.classList.toggle('is-active', isActive);
-          if (isActive) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
+          if (isActive) {
+            link.setAttribute('aria-current', 'location');
+            if (mobileSummary) mobileSummary.textContent = link.textContent;
+          } else {
+            link.removeAttribute('aria-current');
+          }
         });
       });
     },

@@ -9,6 +9,21 @@
   scroll-margin-top: calc(var(--header-height) + var(--space-6));
 }
 
+@media (max-width: 71.9375em) {
+  .demo-section {
+    /* On mobile the demo-nav is a sticky bar below the header; add its
+       approximate height (summary padding + text + nav padding-bottom)
+       so anchor-linked sections don't scroll behind it. */
+    scroll-margin-top: calc(
+      var(--header-height) +
+      var(--space-3) * 2 +
+      var(--text-sm) * 1.5 +
+      var(--space-2) +
+      var(--space-6)
+    );
+  }
+}
+
 .demo-header {
   display: flex;
   align-items: center;
